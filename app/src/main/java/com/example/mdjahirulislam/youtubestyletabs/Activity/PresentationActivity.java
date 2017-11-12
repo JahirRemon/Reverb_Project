@@ -171,8 +171,8 @@ public class PresentationActivity extends AppCompatActivity {
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle("Select Action");
         String[] pictureDialogItems = {
-                "Select Photo from Camera",
                 "Select Photo from Gallery",
+                "Select Photo from Camera",
                 "Select PDF File" };
 
         pictureDialog.setItems(pictureDialogItems,
@@ -181,11 +181,11 @@ public class PresentationActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                selectImages();
+                                selectGsllery();
                                 break;
 
                             case 1:
-                                selectImages();
+                                selectCamera();
                                 break;
 
                             case 2:
@@ -198,7 +198,7 @@ public class PresentationActivity extends AppCompatActivity {
     }
 
 
-    public void selectImages() {
+    public void selectCamera() {
         Intent intent = new Intent(PresentationActivity.this, ImagePickerActivity.class);
 
         //add to intent the URIs of the already selected images
@@ -210,6 +210,23 @@ public class PresentationActivity extends AppCompatActivity {
         }
         // add them to the intent
         intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
+        intent.putExtra( "from","camera" );
+
+        startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
+    }
+    public void selectGsllery() {
+        Intent intent = new Intent(PresentationActivity.this, ImagePickerActivity.class);
+
+        //add to intent the URIs of the already selected images
+        //first they are converted to Uri objects
+        ArrayList<Uri> uris = new ArrayList<>(tempUris.size());
+        for (String stringUri : tempUris) {
+            uris.add(Uri.fromFile(new File(stringUri)));
+            Log.d( TAG,stringUri );
+        }
+        // add them to the intent
+        intent.putExtra(ImagePickerActivity.EXTRA_IMAGE_URIS, uris);
+        intent.putExtra( "from","gallery" );
 
         startActivityForResult(intent, INTENT_REQUEST_GET_IMAGES);
     }

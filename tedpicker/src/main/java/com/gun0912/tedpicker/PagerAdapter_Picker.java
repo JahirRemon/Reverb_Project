@@ -8,17 +8,31 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 
 public class PagerAdapter_Picker extends FragmentPagerAdapter {
 
 
     String[] tab_titles;
+    String swap;
+    final int swapInt;
 
 
-    public PagerAdapter_Picker(Context context, FragmentManager fm) {
+    public PagerAdapter_Picker(Context context, FragmentManager fm, int i) {
         super(fm);
             tab_titles = context.getResources().getStringArray(R.array.tab_titles);
+            swapInt = i;
+            if (i==1){
+
+                swap = tab_titles[0];
+                tab_titles[0] = tab_titles[1];
+                tab_titles[1] = swap;
+                Log.d( "pageAdapter", "Swapping and i = "+i );
+            }
+//            if (i==1){
+//                swapInt = tab_titles[]
+//            }
 
     }
 
@@ -35,21 +49,29 @@ public class PagerAdapter_Picker extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
+        Log.d( "pageAdapter","position  ------> "+position );
+        if (position != swapInt){
+            Log.d( "pageAdapter","Enter If condition" );
+            CwacCameraFragment profileInfoFragment = new CwacCameraFragment();
+            CwacCameraFragment.setConfig(ImagePickerActivity.getConfig());
+            return profileInfoFragment;
+        }else {
+            Log.d( "pageAdapter","Enter Else condition" );
 
-        switch (position) {
-            case 1:
-                CwacCameraFragment profileInfoFragment = new CwacCameraFragment();
-                CwacCameraFragment.setConfig(ImagePickerActivity.getConfig());
-                return profileInfoFragment;
-
-
-            case 0:
-                return new GalleryFragment();
-
-
-            default:
-                return null;
+            return new GalleryFragment();
         }
+
+//        switch (position) {
+//
+//            case swapInt:
+//
+//
+//            case swapInt:
+//
+//
+//            default:
+//                return null;
+//        }
 
 
     }

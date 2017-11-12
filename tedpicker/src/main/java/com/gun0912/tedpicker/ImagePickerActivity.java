@@ -83,9 +83,17 @@ public class ImagePickerActivity extends AppCompatActivity implements CameraHost
         initView();
 
         setTitle(mConfig.getToolbarTitleRes());
+        String from = getIntent().getStringExtra( "from" );
+
+        if (from.equals( "camera" )){
+            setupTabs(1);
+        }else if (from.equals( "gallery" )){
+            setupTabs(0);
+        }else {
+            setupTabs( 0 );
+        }
 
 
-        setupTabs();
         setSelectedPhotoRecyclerView();
 
     }
@@ -161,8 +169,8 @@ public class ImagePickerActivity extends AppCompatActivity implements CameraHost
 
     }
 
-    private void setupTabs() {
-        adapter = new PagerAdapter_Picker(this, getSupportFragmentManager());
+    private void setupTabs(int i) {
+        adapter = new PagerAdapter_Picker(this, getSupportFragmentManager(),i);
         mViewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(mViewPager);
 
