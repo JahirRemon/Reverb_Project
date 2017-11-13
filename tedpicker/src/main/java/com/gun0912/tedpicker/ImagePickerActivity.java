@@ -57,6 +57,8 @@ public class ImagePickerActivity extends AppCompatActivity implements CameraHost
     PagerAdapter_Picker adapter;
     Adapter_SelectedPhoto adapter_selectedPhoto;
 
+    int fromInt = 0;
+
     public static Config getConfig() {
         return mConfig;
     }
@@ -87,8 +89,10 @@ public class ImagePickerActivity extends AppCompatActivity implements CameraHost
 
         if (from.equals( "camera" )){
             setupTabs(1);
+            fromInt  = 1;
         }else if (from.equals( "gallery" )){
             setupTabs(0);
+            fromInt = 0;
         }else {
             setupTabs( 0 );
         }
@@ -216,7 +220,7 @@ public class ImagePickerActivity extends AppCompatActivity implements CameraHost
         if (adapter == null || adapter.getCount() < 2)
             return null;
 
-        return (GalleryFragment) adapter.getItem(0);
+        return (GalleryFragment) adapter.getItem(fromInt);
 
     }
 

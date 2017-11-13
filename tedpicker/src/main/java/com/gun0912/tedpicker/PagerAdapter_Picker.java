@@ -61,19 +61,6 @@ public class PagerAdapter_Picker extends FragmentPagerAdapter {
             return new GalleryFragment();
         }
 
-//        switch (position) {
-//
-//            case swapInt:
-//
-//
-//            case swapInt:
-//
-//
-//            default:
-//                return null;
-//        }
-
-
     }
 
 
